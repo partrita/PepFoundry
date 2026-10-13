@@ -50,63 +50,63 @@ In addition, PepFoundry supports the generation of cyclic peptides. These peptid
 
 ## 1. Installation Guide
 
-### 1.1. Creating an Environment with PepFoundry
+### 1.1. Quick Setup with Pixi (Recommended)
 
-To automatically create the environment with all required packages, download the file **`setup_pepfoundry.sh`** and run the following command:
+PepFoundry uses [Pixi](https://pixi.sh/) for reproducible, fast, and completely isolated dependency management (stored inside `.pixi/`, without polluting system or global Conda environments).
+
+To automatically install Pixi (if needed) and set up the isolated environment:
 
 ```sh
-bash setup_pepfoundry.sh 
+bash setup_pepfoundry.sh
 ```
 
-### 1.2. Creating an Anaconda Environment Manually
-Alternatively, you can create an Anaconda environment manually by running the following commands manually in the terminal:
+Or run directly with Pixi:
 
-#### 1.2.1. Creating the Environment
+```sh
+# For GPU (CUDA) support:
+pixi run -e cuda python your_script.py
+
+# For CPU-only environment:
+pixi run -e cpu python your_script.py
+
+# Or activate the shell environment:
+pixi shell -e cuda
+```
+
+### 1.2. Alternative: Manual Anaconda Environment
+Alternatively, you can create an Anaconda environment manually:
+
+#### 1.2.1. Creating and Activating the Environment
 
 ```sh
 conda create --name pepfoundry python=3.11
-```
-
-#### 1.2.2. Activating the Environment
-
-```sh
 conda activate pepfoundry
 ```
 
-#### 1.2.3.  Installing Dependencies
+#### 1.2.2. Installing Dependencies
 
 ```sh
 conda install -c conda-forge rdkit numpy=1.26
 ```
-- Install PyTorch (GPU-**{CUDA}**)
-```sh
-pip install torch --index-url https://download.pytorch.org/whl/{CUDA}
-```
-*e.g: pip install torch --index-url https://download.pytorch.org/whl/cu121
 
-- Or Install PyTorch (CPU)
+- Install PyTorch (GPU-{CUDA}):
 ```sh
-pip install torch --index-url https://download.pytorch.org/whl/cpu
+pip install torch torchvision --index-url https://download.pytorch.org/whl/cu121
 ```
-- Dependencies:
+
+- Or Install PyTorch (CPU):
 ```sh
-pip install openpyxl
+pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
 ```
+
+- Additional Dependencies:
 ```sh
-pip install scikit-learn
+pip install openpyxl scikit-learn ipykernel pandas openbabel-wheel
 ```
+
+#### 1.2.3. Installing PepFoundry
 ```sh
-pip install ipykernel
-```
-```sh
-pip install pandas
-```
-```sh
-pip install openbabel-wheel
-```
-#### 1.2.4.  Installing PepFoundry from GitHub
-```sh
-pip install git+https://github.com/BilodeauGroup/PepFoundry.git
+pip install -e .
 ```
 
 ## 2. Usage
